@@ -1,0 +1,22 @@
+ASLANIDIS THEOFANIS
+1115201500013
+
+Sys.Pro. Project1
+
+Compilation manual:
+make JobExecutor		//for compilation
+./JobExecutor -d docfile -w K	//to run the program (K > 1)
+make clean			//delete the *.o files and the executable
+
+Stin ergasia exw akolouthisei pista tis odigies tis ekfonisis.(elege na grapsw kai to readme se ascii, giauto xrisimopoiw greeklish) 
+
+Genika exw xrismopoihsei tis idies domes me tin proti ergasia oson afora to trie(Insert, df ktlp). Mia diafora vevaia einai oti to amount pou exw se kathe komvo tou plist einai idio gia kathe leksi tou idiou arxeiou, mias pou to amount xriazetai mono gia min kai max count.
+
+JobExecutor.c: O kodikas edw xorizetai se worker kai Job executor.
+Ta processes dimioyrgoyntai me fork(). O diaxorismos ginetai me mia metavliti parent pid pou exw krathsei. An to getpid() einai parentpid ekteleitai o job executor alliws ektelountai worker. Exw xrisimopoihsei 2 pipe gia tin epikoinonia kathe worker me ton parent. Ena poy grafei o job exec kai diavazei o worker kai ena pou grafei o worker kai diavazei o job exec. H diafora ton 2 auton pipe einai oti se auto opou grafei o job exec exw valei non block mode, kai to blocking ginetai me ta sigstop kai sigcont. Antitheta ekei pou grafei o worker gia na diavasei o pateras einai clear to non block giati thelw o pateras na blockaretai otan paei na diavasei apo adeio pipe. Perimenei ton worker na grapsei. Xrisimopoihsa sigstop kai sigcont me siriako diavasma giati theorisa oti i apodosi kai h katanomh ton poron einai akrivws i idia me to na xrisimopoiousa poll() kai na evlepa poio paidi egrapse prota. Auto ginetai giati ta sigstop kai sigcont einai entoles ston kernel tou sistimatos opote otan teliosoun ti douleia tous oi workers, parolo pou o mpampas den diavase to pipe tous, oi poroi tous mporoun kai einai diatethimenoi pali sto sistima apo ton kernel.
+Sta min kai max parolo pou to plist paei ana line tou arxeiou, exoun ola osa einai sto idio arxeio to idio amount opote dieukolinetai i diadikasia poli, kai i poliplokotita tous einai poli mikri.
+To amount eixa tin dinatotita na to kanw etsi, giati den mas noiazei score opos stin proti ergasia, para mono se poia grami iparxei poia leskh. 
+Sthn /search pairno mono 10 orismata gia na paw na psaksw, kai sto log tha grafoun eite iparxoun eite oxi, gia na mporesei meta to bash script na kanei katametrisi ton queries. Kano elegxo gia ta orismata
+ston job executor(opos kai se oles tis entoles, prota tis diavazei o job executor gia na dei oti einai sosto to format kai meta tis stelnei stous workers) kai pernaei keywords stous workers. Oi workers
+exoun enan pinaka Sent didiastato, pou kratane gia ola ta file kai gia ola ta line ekeina pou vrethike esto mia leksi apo to query. Diladi sent[#files][#lines of file], me auton ton tropo pernao mia anazitisii to dentro gia kathe leksi, trexw to plist kai kanw flag kathe antistixi thesi tou pinaka. Sto telos tis diadikasias, anoigw to arxeio kai diavazw ola auta ta lines. Ta lines grafontai mazi me path kai arithmo panw se ena megalo buffer os apantisi. Enas worker tha exei stin apantisi tou polla line! Opote giauto kano ti xrisi tis realloc ama o buffer answers ftasei sto maxsize gia to pipe. to maxsize to exo kanei define. Opote i apantisi pernaei mia fora sto telos an einai mikri allios grafontai ena ena ta kommatia tis. Ena case pou den exo ftiaksei einai otan mono tou to line den xoraei ston buffer kai prepei na spasei. Poli ligi douleia ithele akoma alla paradidw sto teleutaio lepto kai den prolava. Ousiastika apla spaei ti grammi se max buff kommatia me tin strncpy. O pateras diavazei apo to pipe tin apantisi mexri na lavei eow(end of worker).Oopote se periptosi line megaliterou tou max buf girnaw minima "line too big for preview" kai ektiponei auto anti gia to line gia na min stamatisei to programma. Ta deadlines ta exo kanei me tin sys/time.h kai sigkekrimena tin struct tm. Telos exw valei sta perissotera simeia free. To etreksa me valgrind kai eixa polu liga leaks, giati profanos se kapoio shmeio exo ksexasei na valw free().
+
